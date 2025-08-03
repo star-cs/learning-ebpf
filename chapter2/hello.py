@@ -10,10 +10,15 @@ int hello(void *ctx) {
 """
 
 b = BPF(text=program)
-syscall = b.get_syscall_fnname("execve")
+
+syscall = b.get_syscall_fnname("execve")    # 获取系统调用名称
+
+'''
+event 附加事件
+'''
 b.attach_kprobe(event=syscall, fn_name="hello")
 
 try:
-    b.trace_print()
+    b.trace_print() # 读取内核输出的跟踪信息并将其输出到屏幕上
 except KeyboardInterrupt:
     sys.exit(0)

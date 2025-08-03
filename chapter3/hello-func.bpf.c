@@ -1,8 +1,9 @@
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
 
-static __attribute((noinline)) int get_opcode(struct bpf_raw_tracepoint_args *ctx) {
-    return ctx->args[1];
+//__attribute((noinline)) 来强制编译器不内联
+static __attribute((noinline)) int get_opcode(struct bpf_raw_tracepoint_args *ctx) { 
+    return ctx->args[1]; // 提取系统调用操作码
 }
 
 SEC("raw_tp/")

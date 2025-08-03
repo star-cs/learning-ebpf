@@ -1,3 +1,8 @@
+'''
+任何系统调用被调用时，都会触发该跟踪点。
+修改 hello-map.py ，通过将其附加到相同的 sys_enter 原始跟踪点，
+展示每个用户 ID 发出的总系统调用的数量。
+'''
 #!/usr/bin/python3  
 from bcc import BPF
 from time import sleep
@@ -22,11 +27,9 @@ int hello(void *ctx) {
 """
 
 b = BPF(text=program)
-syscall = b.get_syscall_fnname("execve")
-b.attach_kprobe(event=syscall, fn_name="hello")
 
 # Attach to a tracepoint that gets hit for all syscalls 
-# b.attach_raw_tracepoint(tp="sys_enter", fn_name="hello")
+b.attach_raw_tracepoint(tp="sys_enter", fn_name="hello")
 
 while True:
     sleep(2)

@@ -7,7 +7,7 @@ SEC("xdp")
 int hello(struct xdp_md *ctx) {
     bpf_printk("Hello World %d", counter);
     counter++; 
-    return XDP_PASS;
+    return XDP_PASS; // 小心，谨慎返回0
 }
 
 char LICENSE[] SEC("license") = "Dual BSD/GPL";
